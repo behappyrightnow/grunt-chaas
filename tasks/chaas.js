@@ -11,12 +11,14 @@
 module.exports = function(grunt) {
   var path = require('path'),
       fs = require('fs'),
-      distpath = path.join(path.dirname(__dirname), 'node_modules/chaas/dist');
+      rootpath = path.dirname(__dirname),
+      modulepath = path.join(rootpath, 'node_modules'),
+      distpath = path.join(modulepath, 'chaas/dist');
 
   // Please see the Grunt documentation for more information regarding task
   // creation: http://gruntjs.com/creating-tasks
 
-  grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadTasks(path.join(modulepath, 'grunt-contrib-connect/tasks'));
 
   grunt.registerTask('chaas', 'Grunt plugin for behappyrightnow/chaas', function() {
     // Merge task-specific and/or target-specific options with these defaults.
