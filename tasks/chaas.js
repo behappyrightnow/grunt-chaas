@@ -9,42 +9,74 @@
 'use strict';
 
 module.exports = function(grunt) {
+  var path = require('path'),
+      fs = require('fs'),
+      distpath = path.join(path.dirname(__dirname), 'node_modules/chaas/dist');
 
   // Please see the Grunt documentation for more information regarding task
   // creation: http://gruntjs.com/creating-tasks
 
-  grunt.registerMultiTask('chaas', 'Grunt plugin for behappyrightnow/chaas', function() {
+  grunt.loadNpmTasks('grunt-contrib-connect');
+
+  grunt.registerTask('chaas', 'Grunt plugin for behappyrightnow/chaas', function() {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       punctuation: '.',
       separator: ', '
     });
 
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
+    var base = grunt.option('path') || './';
+
+    if ( ! grunt.config('chaas.base') ){
+      grunt.config('chaas.base', base);
+    }
+
+    grunt.config.merge({
+      chaas: grunt.file.readJSON(path.join(base, 'chaas.json')),
+      connect: {
+        chaas: {
+          options: {
+            protocol: 'http',
+            hostname: 'localhost',
+            port: 6789,
+            base: [ distpath, base ],
+            open: 'http://localhost:6789/chaas.html',
+            middleware: function(connect, options, middlewares){
+              middlewares.unshift(function updateWiki(request, response, next){
+                if ( request.url !== '/page' || request.method !== 'POST' ){
+                  return next();
+                }
+                var name = request.body.name,
+                    contents = request.body.contents || '';
+
+                if ( !name ) {
+                  response.statusCode = 404;
+                  response.end(JSON.stringify({ message: 'Missing parameter: name' }));
+                }
+
+                if ( !contents ) { // Do something appropriate?
+                }
+
+                var wiki = grunt.config.get('chaas.wiki'),
+                    path = grunt.config.get('chaas.base');
+
+                fs.writeFileSync(path + wiki + name, contents);
+
+                response.statusCode = 200;
+
+                response.end();
+              });
+
+              middlewares.unshift(connect.urlencoded());
+
+              return middlewares;
+            }, // END middleware
+          }
         }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
-
-      // Handle options.
-      src += options.punctuation;
-
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
-
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
+      }
     });
+
+    grunt.task.run('connect:chaas:keepalive');
   });
 
 };
