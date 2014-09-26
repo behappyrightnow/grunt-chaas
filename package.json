@@ -38,5 +38,9 @@
   },
   "keywords": [
     "gruntplugin"
-  ]
+  ],
+  "dependencies": {
+    "chaas": "git://github.com/behappyrightnow/chaas",
+    "grunt-contrib-connect": "^0.8.0"
+  }
 }
