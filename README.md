@@ -38,3 +38,6 @@ A term coined by Joshua Kerievsky, it refers to documentation that is accompanie
 This is not a new idea at all. It has been well illustrated by Ward Cunningham's pioneering work with [FIT](http://fit.c2.com) and ObjectMentor's [FitNesse](http://fitnesse.org). Chaas is an evolution of these ideas. It is exclusively focused for now on Javascript, built on a foundation of AngularJS and Grunt. It has a super small footprint, and does not generate any unnecessary files. It is still early days for Chaas, and you are welcome to contribute to this project.
 
 This plugin requires Grunt `~0.4.4`
+
+## Contributing
+In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
