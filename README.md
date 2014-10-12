@@ -16,7 +16,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-chaas')
 }
 ```
-Then, make your chaas configuration file (chaas.json) with the following structure:
+Then, make your chaas configuration file (chaas.json) in your project folder with the following structure:
 ```shell
 {
   "fixtures": ["/path/to/fixtures"],
@@ -25,7 +25,7 @@ Then, make your chaas configuration file (chaas.json) with the following structu
 }
 ```
 
-You can now run chaas by issuing:
+You can now run chaas by issuing in your project folder:
 ```shell
 grunt chaas
 ```
