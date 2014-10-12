@@ -32,6 +32,13 @@ grunt chaas
 
 The fixtures and logic settings take an array of folders, so you can merge multiple projects and run a single wiki to manage all your executable documentation.
 
+## Demos
+You can try existing examples by issuing, from your project folder:
+```shell
+grunt chaas --path=node_modules/grunt-chaas/examples/
+```
+You will be able to see three simple tables that Chaas currently supports. 
+
 ## What is executable documentation?
 A term coined by Joshua Kerievsky, it refers to documentation that is accompanied with tests that are visible through the browser and can be executed. It differs from unit tests or even acceptance tests in that it is usually constructed for subject matter experts, and owned by them. While they may take the help of technical folks to edit and maintain this, the intention is for them to own the construction and content of the tests. 
 
