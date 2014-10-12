@@ -6,7 +6,7 @@
 
 Install the plugin with:
 ```shell
-npm install grunt-chaas 
+npm install behappyrightnow/grunt-chaas 
 ```
 
 Then, include the following in Gruntfile.js (create it if you don't have one) in your project folder:
